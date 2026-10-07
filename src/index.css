@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Syne', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  main,
+  section,
+  header,
+  footer {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .grid > * {
+    min-width: 0;
+  }
+
+  html {
+    background-color: #090608;
+    color: #f8fafc;
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #090608;
+    color: #f8fafc;
+    overflow-x: clip;
+    selection-background-color: #dc2626;
+    selection-color: #ffffff;
+  }
+
+  ::selection {
+    background-color: rgba(220, 38, 38, 0.35);
+    color: #ffffff;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Custom cursor (transform-only, no transitions on position) ---------- */
+.areex-cursor-layer {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  contain: layout style paint;
+}
+.areex-cursor-dot,
+.areex-cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 9999px;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform;
+  transition: opacity 0.15s ease;
+}
+.areex-cursor-dot {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  background: #ef4444;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.95);
+}
+.areex-cursor-ring {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 1px solid rgba(239, 68, 68, 0.6);
+}
+/* Hover look uses a pseudo-element so the moving transform is never transitioned */
+.areex-cursor-dot::after,
+.areex-cursor-ring::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.areex-cursor-dot.is-hover::after {
+  background: #fff;
+  transform: scale(1.25);
+}
+.areex-cursor-ring.is-hover::after {
+  transform: scale(1.5);
+  background: rgba(220, 38, 38, 0.15);
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.45);
+  border: 1px solid #ef4444;
+}
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
